@@ -14,6 +14,10 @@
 
 - <https://drive.google.com/file/d/0B9NaveQvqTbHNS1xeHFCeXVxTm8/view?usp=sharing>
 
+# struct
+
+![alt text](struct.png)
+
 # iTunes API
 
 - <https://itunes.apple.com/kr/rss/topfreeapplications/limit=50/genre=6015/json>
