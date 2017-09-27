@@ -1,0 +1,25 @@
+PODS:
+  - HCSStarRatingView (1.5)
+  - IoniconsSwift (2.1.4)
+
+DEPENDENCIES:
+  - HCSStarRatingView (~> 1.5)
+  - IoniconsSwift (from `http://github.com/tidwall/IoniconsSwift.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  IoniconsSwift:
+    :branch: master
+    :git: http://github.com/tidwall/IoniconsSwift.git
+
+CHECKOUT OPTIONS:
+  IoniconsSwift:
+    :commit: 6189f2c363b7694b89a1efea7bf29f967cb8b464
+    :git: http://github.com/tidwall/IoniconsSwift.git
+
+SPEC CHECKSUMS:
+  HCSStarRatingView: 1d18f79654735514cd6f00e6d90e38cb6320dc31
+  IoniconsSwift: a9034803dfe59ec48a73c95b812c67afdfa3ed08
+
+PODFILE CHECKSUM: 9dc4891b6b3e79fbff899e21287092c6c93162a3
+
+COCOAPODS: 1.1.1
