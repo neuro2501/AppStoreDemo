@@ -17,7 +17,7 @@
 # iTunes API
 
 - <https://itunes.apple.com/kr/rss/topfreeapplications/limit=50/genre=6015/json>
-- <https://itunes.apple.com/lookup?id={id}&country=kr>
+- <https://itunes.apple.com/lookup?id=6015&country=kr>
 
 # 라이브러리
 
