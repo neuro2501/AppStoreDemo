@@ -36,6 +36,7 @@ struct NetworkService {
         
     }
     
+    
     static func json(url:String, _ parameters:[String:String] = [:], success: @escaping (JSON?) -> (), failure: @escaping (Error) -> ()){
         
         self.request(url: url, parameters, success: { (data) in

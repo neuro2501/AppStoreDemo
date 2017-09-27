@@ -21,9 +21,6 @@
 
 # 라이브러리
 
-* [HCSStarRatingView](https://github.com/hsousa/HCSStarRatingView) 
-- 별점수를 위해 사용함
-
-* [IoniconsSwift](https://github.com/tidwall/IoniconsSwift) 
-- 아이콘을 쓰기 위해 사용함
+- [HCSStarRatingView](https://github.com/hsousa/HCSStarRatingView) 별점수를 위해 사용함
+- [IoniconsSwift](https://github.com/tidwall/IoniconsSwift) 아이콘을 쓰기 위해 사용함
 

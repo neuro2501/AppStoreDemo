@@ -10,9 +10,13 @@ import Foundation
 
 //MARK: - RSS
 
-struct RSS: JSONDecodable {
+class RSS {
     
     let feed: Feed?
+    
+    init(feed: Feed) {
+        self.feed = feed
+    }
     
     func feedEntryCount() -> Int{
         return feed?.entry?.count ?? 0

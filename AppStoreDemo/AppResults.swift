@@ -9,11 +9,16 @@
 import Foundation
 import UIKit
 
-struct AppResults: JSONDecodable {
+class AppResults {
  
     let resultCount: Int
     let results: [AppResult]?
  
+    init(resultCount: Int, results: [AppResult]?) {
+        self.resultCount = resultCount
+        self.results = results
+    }
+    
     func result() -> AppResult?{
         return results?.first
     }

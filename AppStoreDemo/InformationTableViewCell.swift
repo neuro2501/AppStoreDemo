@@ -47,9 +47,11 @@ extension InformationTableViewCell{
 
     func openURL(){
         if let url = url, let requestUrl = URL(string: url){
-            UIApplication.shared.open(requestUrl, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(requestUrl, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(requestUrl)
+            }            
         }
     }
-
-
 }

@@ -13,7 +13,8 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var appDetailHeaderView: AppDetailHeaderView!
-    
+    var loadingView: LoadingView?
+
     var appEntry:AppEntry!
     var rank: Int!
     var appResults: AppResults?
@@ -30,6 +31,8 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
         
         //setNavigationBar()
         
+        self.loadingView = LoadingView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 44.0;
         
@@ -44,9 +47,14 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
     }
         
     func loadData(appId: String){
+        
+        self.showLoadingView()
+        
         iTunesAPI.lookup(id: appId, country: "kr", success: { [weak self] (appResults) in
             
             if let strongSelf = self {
+                
+                strongSelf.hideLoadingView()
                 strongSelf.appResults = appResults
                 let genre = strongSelf.appEntry.genre()
                 let rank = strongSelf.rank
@@ -60,9 +68,17 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
                 }
             }
             
-        }, failure: { (error) in
-        
+        }, failure: { [weak self]  (error) in
+            self?.hideLoadingView()
         })
+    }
+    
+    func showLoadingView(){
+        self.tableView.tableFooterView = loadingView
+    }
+    
+    func hideLoadingView(){
+        self.tableView.tableFooterView = nil
     }
     
     func setHeaderView(appEntry: AppEntry){
