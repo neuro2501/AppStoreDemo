@@ -12,7 +12,7 @@
 
 # Demo
 
-![alt text](demo.gif)
+- <https://drive.google.com/file/d/0B9NaveQvqTbHNS1xeHFCeXVxTm8/view?usp=sharing>
 
 # iTunes API
 
