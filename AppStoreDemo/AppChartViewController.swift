@@ -14,15 +14,15 @@ class AppChartViewController: UIViewController {
     var rss: RSS?
 
     @IBOutlet var tableView: UITableView!
-    var loadingView: LoadingView?
-    var emptyView: EmptyView?
+    var loadingView: LoadingView!
+    var emptyView: EmptyView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.loadingView = LoadingView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
         self.emptyView = EmptyView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 200))
-        self.emptyView?.delegate = self
+        self.emptyView.delegate = self
 
         self.setNavigationBar()
         self.loadData()
@@ -35,11 +35,10 @@ class AppChartViewController: UIViewController {
         self.showLoadingView()
         self.hideEmptyView()
 
-        iTunesAPI.rss(country: "kr", type: "topfreeapplications", limit: 50, genre: 6015, contentType: "json", success: { [weak self](rss) in
+        ItunesAPI.rss(country: "kr", type: "topfreeapplications", limit: 50, genre: 6015, contentType: "json", success: { [weak self](rss) in
             if let rss = rss, let strongSelf = self {
                 strongSelf.rss = rss
                 strongSelf.tableView.reloadData()
-                strongSelf.tableView.tableFooterView = nil
                 strongSelf.hideEmptyView()
                 strongSelf.hideLoadingView()
             }
@@ -116,8 +115,7 @@ extension AppChartViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell:AppChartTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AppChartTableViewCell", for: indexPath) as! AppChartTableViewCell
         
-        let entry = rss?.feedEntry()
-        if let entry = entry {
+        if let entry = rss?.feedEntry() {
             let row = indexPath.row
             let appEntry = entry[row]
             cell.configureWith(appEntry: appEntry, rank: row+1)

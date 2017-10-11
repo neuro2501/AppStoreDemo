@@ -8,23 +8,22 @@
 
 import UIKit
 
+//TableView Loading at footerView
 class LoadingView: UIView {
 
-    var activityIndicatorView: UIActivityIndicatorView?
-    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.center = CGPoint(x:self.bounds.midX,y:self.bounds.midY)
+        self.addSubview(activityIndicatorView)
+        
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        if let activityIndicatorView = self.activityIndicatorView {
-            activityIndicatorView.startAnimating()
-            activityIndicatorView.center = CGPoint(x:self.bounds.midX,y:self.bounds.midY)
-            self.addSubview(activityIndicatorView)
-        }
-    }
-
 }

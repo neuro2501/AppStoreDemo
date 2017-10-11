@@ -11,19 +11,36 @@ import XCTest
 
 class AppStoreDemoTests: XCTestCase {
     
+    var expectedAppResult:AppResult!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        expectedAppResult = AppResult(ipadScreeshotUrls: [], appletvScreenshotUrls: [], artworkUrl512: "", isGameCenterEnabled: false, version: "", artistId: "", artistName: "Kakaobank", genres: [], averageUserRating: 3.0, userRatingCount: 0, userRatingCountForCurrentVersion: 0, averageUserRatingForCurrentVersion: 0.0, trackContentRating: "", currentVersionReleaseDate: "", releaseNotes: "", screenshotUrls: [], desc: "", sellerName: "", sellerUrl: "", fileSizeBytes: "153947136", supportedDevices: [], minimumOsVersion: "", languageCodesISO2A: "")
+        
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAppResultDecode() {
+        
+        let jsonDict = ["averageUserRating":3.0,"artistName":"Kakaobank","fileSizeBytes":"153947136"] as JSONDictionary
+        let actualAppResult = AppResult.decode(jsonDict: jsonDict)
+        
+        XCTAssertEqual(expectedAppResult, actualAppResult)
+        
+    }
+    
+    func testAppResultUserRatingCountForCurrentVersion(){
+        if expectedAppResult.userRatingCountForCurrentVersion > 20 {
+            XCTAssertTrue(expectedAppResult.hasMuchUserRatingCountForCurrentVersion)
+            XCTAssertEqual(expectedAppResult.userRatingCountForCurrentVersionDesc(), "\(expectedAppResult.userRatingCountForCurrentVersion)개의 평가")
+        }else{
+            XCTAssertFalse(expectedAppResult.hasMuchUserRatingCountForCurrentVersion)
+            XCTAssertEqual(expectedAppResult.userRatingCountForCurrentVersionDesc(), "평가부족")
+        }
     }
     
     func testPerformanceExample() {

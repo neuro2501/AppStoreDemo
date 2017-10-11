@@ -12,7 +12,8 @@ typealias JSON = AnyObject
 typealias JSONDictionary = [String: JSON]
 
 protocol JSONDecodable{
-    static func decode(jsonDict: JSONDictionary) -> Self
+    associatedtype T
+    static func decode(jsonDict: JSONDictionary) -> T
 }
 
 struct JSONDecoder {

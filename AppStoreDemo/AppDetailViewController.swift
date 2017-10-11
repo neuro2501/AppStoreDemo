@@ -11,14 +11,15 @@ import IoniconsSwift
 
 class AppDetailViewController: AppDetailNavigationBarViewController {
 
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var appDetailHeaderView: AppDetailHeaderView!
-    var loadingView: LoadingView?
-
     var appEntry:AppEntry!
     var rank: Int!
     var appResults: AppResults?
     var isDragging: Bool = false
+
+    //view
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var appDetailHeaderView: AppDetailHeaderView!
+    var loadingView: LoadingView!
     
     //cell
     var appNewFuncTableViewCell: AppNewFuncTableViewCell?
@@ -29,19 +30,15 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setNavigationBar()
-        
         self.loadingView = LoadingView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
 
         tableView.rowHeight = UITableViewAutomaticDimension;
         tableView.estimatedRowHeight = 44.0;
         
-        if let appEntry = appEntry{
-            setHeaderView(appEntry: appEntry)
-            self.setNavigationItemRightWith(appEntry: appEntry, vc: self)
-            if let appId = appEntry.appId() {
-                self.loadData(appId: appId)
-            }
+        setHeaderView(appEntry: appEntry)
+        self.setNavigationItemRightWith(appEntry: appEntry, vc: self)
+        if let appId = appEntry.appId {
+            self.loadData(appId: appId)
         }
         
     }
@@ -50,16 +47,12 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
         
         self.showLoadingView()
         
-        iTunesAPI.lookup(id: appId, country: "kr", success: { [weak self] (appResults) in
+        ItunesAPI.lookup(id: appId, country: "kr", success: { [weak self] (appResults) in
             
             if let strongSelf = self {
-                
                 strongSelf.hideLoadingView()
                 strongSelf.appResults = appResults
-                let genre = strongSelf.appEntry.genre()
-                let rank = strongSelf.rank
-                let appResult = appResults?.result()
-                if let appResult = appResult, let rank = rank, let genre = genre {
+                if let appResult = appResults?.firstResult, let rank = strongSelf.rank, let genre = strongSelf.appEntry.genre {
                     strongSelf.appDetailHeaderView.configureWith(appResult: appResult, rank: rank, genre: genre)
                     if let iconImageUrl = strongSelf.appEntry.appIconImageUrl(size: .medium){
                         strongSelf.setNavigaionItemTitleViewWith(imageUrl: iconImageUrl)
@@ -88,21 +81,10 @@ class AppDetailViewController: AppDetailNavigationBarViewController {
     
 }
 
-extension AppDetailViewController:UIScrollViewDelegate {
+extension AppDetailViewController: UIScrollViewDelegate {
     
-    /*
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        isDragging = true
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        isDragging = false
-    }
-    */
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if scrollView.contentOffset.y > self.threshold{
+    func setAppearTitleImageView(scrollViewY: CGFloat){
+        if scrollViewY > self.threshold{
             if !self.isTitleImageViewAppear {
                 self.showItems()
             }
@@ -111,7 +93,28 @@ extension AppDetailViewController:UIScrollViewDelegate {
                 self.hideItems()
             }
         }
-        
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isDragging = true
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        isDragging = false
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if isDragging {
+            setAppearTitleImageView(scrollViewY: scrollView.contentOffset.y)
+        }
+    }
+    
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        setAppearTitleImageView(scrollViewY: scrollView.contentOffset.y)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setAppearTitleImageView(scrollViewY: scrollView.contentOffset.y)
     }
     
 }
@@ -178,7 +181,7 @@ extension AppDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             let cell:AppNewFuncTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AppNewFuncTableViewCell", for: indexPath) as! AppNewFuncTableViewCell
             
-            if let appResult = appResults?.results?.first {
+            if let appResult = appResults?.firstResult {
                 cell.configureWith(appResult: appResult,appNewFuncTableViewCell?.isExpanded ?? false)
                 appNewFuncTableViewCell = cell
             }
@@ -187,7 +190,7 @@ extension AppDetailViewController: UITableViewDelegate, UITableViewDataSource {
         }else if indexPath.row == 1 {
             let cell:AppPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AppPreviewTableViewCell", for: indexPath) as! AppPreviewTableViewCell
             
-            if let appResult = appResults?.results?.first {
+            if let appResult = appResults?.firstResult {
                 cell.configureWith(appResult: appResult)
                 appPreviewTableViewCell = cell
             }
@@ -197,7 +200,7 @@ extension AppDetailViewController: UITableViewDelegate, UITableViewDataSource {
             
             let cell:AppDescTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AppDescTableViewCell", for: indexPath) as! AppDescTableViewCell
             
-            if let appResult = appResults?.results?.first {
+            if let appResult = appResults?.firstResult {
                 cell.configureWith(appResult: appResult, appDescTableViewCell?.isExpanded ?? false)
                 appDescTableViewCell = cell
             }
@@ -207,7 +210,7 @@ extension AppDetailViewController: UITableViewDelegate, UITableViewDataSource {
         
             let cell:AppInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AppInfoTableViewCell", for: indexPath) as! AppInfoTableViewCell
             
-            if let appResult = appResults?.results?.first {
+            if let appResult = appResults?.firstResult {
                 cell.configureWith(appResult: appResult)
                 appInfoTableViewCell = cell
             }

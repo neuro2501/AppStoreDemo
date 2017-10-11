@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - RSS
 
-class RSS {
+class RSS:JSONDecodable {
     
     let feed: Feed?
     
@@ -27,7 +27,7 @@ class RSS {
     }
     
     static func decode(jsonDict: JSONDictionary) -> RSS {
-        
+                
         let feedDict = JSONDecoder.decodeDict(jsonDict["feed"])
         let feed = Feed.decode(jsonDict: feedDict)
         
@@ -47,9 +47,10 @@ struct Feed: JSONDecodable {
     }
 }
 
+
+
 //MARK: - AppEntry
 
-//TODO: 앱내구입
 struct AppEntry: JSONDecodable {
     
     let imName: IMName?
@@ -61,17 +62,16 @@ struct AppEntry: JSONDecodable {
     let imArtist: IMArtist?
     let rights: Rights?
     
-    func appId() -> String?{
+    var appId: String? {
         return id?.attributes?.imId
     }
     
-    func genre() -> String?{
+    var genre: String? {
         return category?.attributes?.label
     }
     
-    //TODO: 메소드말고 프로퍼티로 할 수 없을까?
-    func subTitle() -> String {
-        return imArtist?.label ?? category?.attributes?.label ?? ""
+    var subTitle: String? {
+        return imArtist?.label ?? category?.attributes?.label
     }
     
     func appIconImageUrl(size: AppIconImageSize) -> String?{

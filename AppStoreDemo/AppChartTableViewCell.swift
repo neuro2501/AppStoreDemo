@@ -31,7 +31,7 @@ class AppChartTableViewCell: UITableViewCell {
 extension AppChartTableViewCell{
     
     func configureWith(appEntry: AppEntry, rank: Int){
-        
+                
         if rank == 1 {
             self.seperatorView.isHidden = true
         }else{
@@ -44,7 +44,7 @@ extension AppChartTableViewCell{
         }
         self.rankLabel.text = "\(rank)"
         self.titleLabel.text = appEntry.title?.label ?? "Title"
-        self.subTitleLabel.text = appEntry.subTitle()
+        self.subTitleLabel.text = appEntry.subTitle
                 
     }
 }
