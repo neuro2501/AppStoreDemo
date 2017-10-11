@@ -1,0 +1,14 @@
+disabled_rules: 
+  - identifier_name
+  - force_cast
+  - force_try
+  - line_length
+  - function_body_length
+  - trailing_whitespace
+  - colon
+  - opening_brace
+  - vertical_whitespace
+  - statement_position
+
+excluded: 
+  - Pods
