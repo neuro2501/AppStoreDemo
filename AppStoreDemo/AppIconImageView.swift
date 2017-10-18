@@ -11,14 +11,15 @@ import UIKit
 
 class AppIconImageView: UIImageView{
     
+    //url 넣고 load 시키기 
     init(frame: CGRect, cornerRadius: CGFloat){
         super.init(frame: frame)
         self.layer.cornerRadius = cornerRadius
         custom()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         self.layer.cornerRadius = 16
         custom()
     }
@@ -29,5 +30,10 @@ class AppIconImageView: UIImageView{
         self.clipsToBounds = true
         self.contentMode = .scaleAspectFill
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
     
 }

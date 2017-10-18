@@ -5,6 +5,7 @@ target 'AppStoreDemo' do
 
 pod 'IoniconsSwift', :git => 'http://github.com/tidwall/IoniconsSwift.git', :branch => 'master'
 pod 'HCSStarRatingView', '~> 1.5'
+pod 'SwiftLint'
 
 use_frameworks!
 end

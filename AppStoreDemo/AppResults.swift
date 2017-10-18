@@ -9,18 +9,17 @@
 import Foundation
 import UIKit
 
-class AppResults {
+class AppResults:JSONDecodable {
  
     let resultCount: Int
     let results: [AppResult]?
- 
+    var firstResult:AppResult? {
+        return results?.first
+    }
+    
     init(resultCount: Int, results: [AppResult]?) {
         self.resultCount = resultCount
         self.results = results
-    }
-    
-    func result() -> AppResult?{
-        return results?.first
     }
     
     static func decode(jsonDict: JSONDictionary) -> AppResults {
@@ -68,43 +67,12 @@ struct AppResult: JSONDecodable {
     
     let languageCodesISO2A: String
     
-    //TODO: 함수가 맞는가 프로퍼티에서 이렇게 하는게 맞는가?
-    var hasMuchUserRatingCountForCurrentVersion: Bool {
-        return (userRatingCountForCurrentVersion > 20) ? true : false
-    }
-    
-    func mainGenre() -> String{
+    var mainGenre: String{
         return genres.first ?? ""
     }
     
-    func userRatingForCurrentVersionWithStar() -> String{
-        if hasMuchUserRatingCountForCurrentVersion {
-            return "\(averageUserRatingForCurrentVersion) \(userRatingForCurrentVersionStar())"
-        }else{
-            return "-----"
-        }
-    }
-    
-    func userRatingForCurrentVersionStar()->String{
-        
-        var star = ""
-        
-        for index in 0...4 {
-            
-            let index = Float(index)
-        
-            if index > averageUserRatingForCurrentVersion {
-                star += "1 "
-            }else if index >= averageUserRatingForCurrentVersion - 0.5 {
-                star += ".5 "
-            }else{
-                star += "0 "
-            }
-            
-        }
-        
-        return star
-        
+    var hasMuchUserRatingCountForCurrentVersion: Bool {
+        return (userRatingCountForCurrentVersion > 20) ? true : false
     }
     
     func userRatingCountForCurrentVersionDesc() -> String{
@@ -207,5 +175,11 @@ struct AppResult: JSONDecodable {
         
     }
     
+}
+
+extension AppResult: Equatable { }
+
+func == (lhs: AppResult, rhs: AppResult) -> Bool {
+    return lhs.averageUserRating == rhs.averageUserRating && lhs.artistName == rhs.artistName && lhs.fileSizeBytes == rhs.fileSizeBytes
 }
 

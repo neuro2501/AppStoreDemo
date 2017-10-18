@@ -12,15 +12,16 @@ class ScreenshotCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var screenshotImageView: UIImageView!
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        print(#function)
         self.layer.cornerRadius = 4
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.clipsToBounds = true
-        self.contentMode = .scaleAspectFill
+        self.contentMode = .scaleAspectFit
     }
-    
+        
 }
 
 extension ScreenshotCollectionViewCell{

@@ -12,14 +12,17 @@ import UIKit
 extension UIImageView {
     
     func imageWith(url:String?){
+        self.image = #imageLiteral(resourceName: "icon_app_default")
         if let url = url {
-            NetworkService.image(url: url, success: { [weak self] (image) in
+            
+            Networking.request(url).responseImage(success: { [weak self] (image) in
                 if let strongSelf = self {
                     strongSelf.image = image ?? #imageLiteral(resourceName: "icon_app_default")
                 }
-            }) { (error) in
+            }, failure: { (error) in
                 
-            }
+            })
+            
         }
     }
     

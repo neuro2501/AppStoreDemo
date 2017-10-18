@@ -6,13 +6,17 @@
 //  Copyright © 2017년 develobe. All rights reserved.
 //
 
+/*
 import Foundation
 import UIKit
 
+//네트워크 서비스
 struct NetworkService {
     
+    //이미지 캐쉬
     static let imageCache = NSCache<NSString, AnyObject>()
-        
+    
+    //이미지 요청
     static func image(url:String, success: @escaping (UIImage?) -> (), failure: @escaping (Error) -> ()){
     
         if let cachedImage = imageCache.object(forKey: url as NSString) as? UIImage {
@@ -26,7 +30,9 @@ struct NetworkService {
             let image = UIImage(data: data)
             if let image = image {
                 imageCache.setObject(image, forKey: url as NSString)
-                success(image)
+                DispatchQueue.main.async() {
+                    success(image)
+                }
             }else{
                 //error
             }
@@ -36,7 +42,7 @@ struct NetworkService {
         
     }
     
-    
+    //json 요청
     static func json(url:String, _ parameters:[String:String] = [:], success: @escaping (JSON?) -> (), failure: @escaping (Error) -> ()){
         
         self.request(url: url, parameters, success: { (data) in
@@ -44,7 +50,9 @@ struct NetworkService {
             
             let json = JSONDecoder.decodeJSON(data)
             
-            success(json)
+            DispatchQueue.main.async() {
+                success(json)
+            }
         
         }) { (error) in
             failure(error)
@@ -52,8 +60,10 @@ struct NetworkService {
         
     }
     
+    //요청
     static func request(url:String, _ parameters:[String:String]? = [:], success: @escaping (Data?) -> (), failure: @escaping (Error) -> ()){
         
+        //get query 설정
         var requestUrl = URL(string: url)
         if let parameters = parameters {
 
@@ -77,12 +87,16 @@ struct NetworkService {
             
         }
         
+        //timeout 설정
+        let urlconfig = URLSessionConfiguration.default
+        urlconfig.timeoutIntervalForRequest = 7
+        urlconfig.timeoutIntervalForResource = 7
+        let session = URLSession(configuration: urlconfig, delegate: nil, delegateQueue: nil)
+        
         if let requestUrl = requestUrl {
-            let task = URLSession.shared.dataTask(with: requestUrl) { (data, response, error) in
+            let task = session.dataTask(with: requestUrl) { (data, response, error) in
                 if let data = data {
-                    DispatchQueue.main.async() {
-                        success(data)
-                    }
+                    success(data)
                 } else if let error = error {
                     print(error.localizedDescription)
                     DispatchQueue.main.async() {
@@ -95,52 +109,4 @@ struct NetworkService {
     }
     
 }
-
-
-protocol API {
-    static var baseUrl:String {get}
-}
-
-struct iTunesAPI:API {
-    
-    static let baseUrl = "https://itunes.apple.com"
-    
-    //https://itunes.apple.com/kr/rss/topfreeapplications/limit=50/genre=6015/json
-    static func rss(country: String, type: String, limit: Int, genre: Int, contentType: String, success: @escaping (_ rss: RSS?) -> (), failure: @escaping (Error) -> ()){
-        
-        let url = "\(baseUrl)/\(country)/rss/\(type)/limit=\(limit)/genre=\(genre)/\(contentType)"
-        
-        NetworkService.json(url: url, success: { (json) in
-            let jsonDict = JSONDecoder.decodeDict(json)
-            
-            let result = RSS.decode(jsonDict: jsonDict)
-            success(result)
- 
-        }) { (error) in
-            failure(error)
-        }
-        
-    }
-        
-    //https://itunes.apple.com/lookup?id=1258016944&country=kr
-    static func lookup(id: String, country: String, success: @escaping (_ appResults: AppResults?) -> (), failure: @escaping (Error) -> ()){
-        
-        let url = baseUrl + "/lookup"
-        let parameters = ["id":id,"country":country]
-        
-        NetworkService.json(url: url, parameters, success: { (json) in
-            let jsonDict = JSONDecoder.decodeDict(json)
-            
-            let result = AppResults.decode(jsonDict: jsonDict)
-            success(result)
-
-        }) { (error) in
-            
-            failure(error)
-            
-        }
-        
-    }
-    
-}
-
+*/

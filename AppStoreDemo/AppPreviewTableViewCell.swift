@@ -34,7 +34,6 @@ class AppPreviewTableViewCell: UITableViewCell {
 
 extension AppPreviewTableViewCell{
     func configureWith(appResult: AppResult){
-        //screenshotUrls
         self.appResult = appResult
         self.screenshotUrls = appResult.screenshotUrls
     }

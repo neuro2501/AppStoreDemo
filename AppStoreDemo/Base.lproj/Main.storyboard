@@ -292,9 +292,9 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PZd-Qj-6Qw">
-                                                            <rect key="frame" x="0.0" y="48.5" width="375" height="83"/>
+                                                            <rect key="frame" x="0.0" y="48.5" width="375" height="99"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8cQ-Ku-exF">
+                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8cQ-Ku-exF" customClass="LeftSectionInsetCollectionViewFlowLayout" customModule="AppStoreDemo" customModuleProvider="target">
                                                                 <size key="itemSize" width="50" height="50"/>
                                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -302,7 +302,7 @@
                                                             </collectionViewFlowLayout>
                                                             <cells>
                                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScreenshotCollectionViewCell" id="y5Z-mF-0dD" customClass="ScreenshotCollectionViewCell" customModule="AppStoreDemo" customModuleProvider="target">
-                                                                    <rect key="frame" x="16" y="16.5" width="50" height="50"/>
+                                                                    <rect key="frame" x="16" y="24.5" width="50" height="50"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -335,7 +335,7 @@
                                                         <constraint firstItem="PZd-Qj-6Qw" firstAttribute="leading" secondItem="hiH-cd-XC8" secondAttribute="leading" id="06Q-LY-WZ3"/>
                                                         <constraint firstAttribute="trailing" secondItem="w8w-Ru-lxC" secondAttribute="trailing" constant="16" id="AZQ-j1-hCb"/>
                                                         <constraint firstItem="QI3-WF-AW2" firstAttribute="leading" secondItem="hiH-cd-XC8" secondAttribute="leading" constant="16" id="DKd-JV-Czr"/>
-                                                        <constraint firstAttribute="bottom" secondItem="PZd-Qj-6Qw" secondAttribute="bottom" constant="16" id="FQ8-Q5-lu4"/>
+                                                        <constraint firstAttribute="bottom" secondItem="PZd-Qj-6Qw" secondAttribute="bottom" id="FQ8-Q5-lu4"/>
                                                         <constraint firstItem="QI3-WF-AW2" firstAttribute="top" secondItem="w8w-Ru-lxC" secondAttribute="bottom" constant="16" id="ZqV-VV-Nbh"/>
                                                         <constraint firstItem="PZd-Qj-6Qw" firstAttribute="top" secondItem="QI3-WF-AW2" secondAttribute="bottom" constant="8" id="esX-Bc-63u"/>
                                                         <constraint firstAttribute="trailing" secondItem="PZd-Qj-6Qw" secondAttribute="trailing" id="glc-Wd-HhL"/>

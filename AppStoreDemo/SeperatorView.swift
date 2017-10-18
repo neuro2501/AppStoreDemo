@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class SeperatorView: UIView {
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.init(red: 200/255, green: 199/255, blue: 204/255, alpha: 1)

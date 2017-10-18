@@ -54,7 +54,7 @@ class AppShareButton: UIButton {
         
         if let appIconImageUrl = appEntry?.imImage?.first?.label {
             
-            NetworkService.image(url: appIconImageUrl, success: { [weak self](image) in
+            Networking.request(appIconImageUrl).responseImage(success: { [weak self] (image) in
                 if let image = image {
                     activityItems.append(image)
                 }
